@@ -3,6 +3,7 @@ import { UserEntity } from './entities/user.entity';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcrypt';
 
+/* tslint:disable no-var-requires */
 const jwt = require('jsonwebtoken');
 
 @Injectable()
@@ -59,7 +60,9 @@ export class UsersService {
       lastName: user.lastName,
     };
 
-    const token = jwt.sign({ ...data }, jwtSecretKey, { expiresIn: '24h' });
+    const token = await jwt.sign({ ...data }, jwtSecretKey, {
+      expiresIn: '24h',
+    });
 
     return { access_token: token, expiresIn: '24h', token_type: 'Bearer' };
   }
@@ -128,6 +131,10 @@ export class UsersService {
   async userSyncProcess(userInfo: any) {
     return this.findUserByEmail(userInfo.email);
   }
+
+  // async softDelete(user: UserEntity): Promise<void> {
+  //   await this.usersService.softDelete(user.id);
+  // }
 
   // create(createProfileDto: CreateUserDto): Promise<User> {
   //   return this.usersRepository.save(

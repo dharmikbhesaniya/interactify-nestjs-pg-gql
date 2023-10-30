@@ -1,22 +1,7 @@
 import { Exclude } from 'class-transformer';
-import {
-  IsEmail,
-  IsInt,
-  IsNotEmpty,
-  IsNumberString,
-  IsString,
-} from 'class-validator';
-// import { AuthProvidersEnum } from 'src/app/auth/dto/auth-providers.enum';
+import { IsEmail, IsNotEmpty, IsNumberString, IsString } from 'class-validator';
 import { BaseEntity } from 'src/app/common/entitys/base.entity';
-import {
-  PrimaryGeneratedColumn,
-  Column,
-  Entity,
-  Index,
-  OneToMany,
-  JoinColumn,
-  OneToOne,
-} from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum PronounsEnum {
   'She/Her',

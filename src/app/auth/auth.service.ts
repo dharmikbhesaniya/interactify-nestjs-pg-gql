@@ -2,7 +2,7 @@ import {
   BadRequestException,
   HttpException,
   HttpStatus,
-  Injectable
+  Injectable,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -98,7 +98,7 @@ export class AuthService {
 
     if (diffInMs > 0) {
       user.isVerified = true;
-      this.authRepository.save(user);
+      await this.authRepository.save(user);
     } else {
       const errorData = `OTP you received has expired and is no longer valid.`;
       throw new BadRequestException(errorData);
@@ -251,7 +251,7 @@ export class AuthService {
 
     if (diffInMs > 0) {
       user.isVerified = true;
-      this.authRepository.save(user);
+      await this.authRepository.save(user);
     } else {
       const errorData = `OTP you received has expired and is no longer valid.`;
       throw new BadRequestException(errorData);
@@ -265,10 +265,6 @@ export class AuthService {
     }
 
     return this.userService.generateJwtToken(user);
-  }
-
-  async softDelete(user: UserEntity): Promise<void> {
-    // await this.usersService.softDelete(user.id);
   }
 
   private async getTokensData(data: { id: string }) {
@@ -311,7 +307,7 @@ export class AuthService {
     };
   }
 
-  private async generateUsername(email) {
+  private generateUsername(email) {
     const username = email.split('@')[0];
     const randomString = Math.random().toString(36).substring(2, 8);
     const uniqueUsername = username + '_' + randomString;
